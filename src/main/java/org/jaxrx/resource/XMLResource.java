@@ -1,6 +1,9 @@
 package org.jaxrx.resource;
 
 import java.io.InputStream;
+import java.security.Principal;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -9,59 +12,85 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
+
 import org.jaxrx.JaxRx;
+import org.jaxrx.core.JaxRxConstants;
 import org.jaxrx.core.ResourcePath;
 import org.jaxrx.core.Systems;
-import org.jaxrx.core.JaxRxConstants;
+
+import com.sun.jersey.core.util.Base64;
 
 /**
  * This class match HTTP requests for the {@link JaxRxConstants#RESOURCEPATH}.
  * This means that JAX-RX returns the available resources which the underlying
  * implementation provide. Available resources could be collections or
  * particular XML resources.
- *
+ * 
  * @author Sebastian Graf, Christian Gruen, Lukas Lewandowski, University of
  *         Konstanz
- *
+ * 
  */
 @Path(JaxRxConstants.RESOURCEPATH)
 public final class XMLResource extends AResource {
 
-
   /**
    * This method returns a collection of available resources. An available
-   * resource can be either a particular XML resource or a collection
-   * containing further XML resources.
-   *
-   * @param system
-   *          The associated system with this request.
-   * @param resource
-   *          The name of the requested resource.
-   * @param uri
-   *          The context information due to the requested URI.
+   * resource can be either a particular XML resource or a collection containing
+   * further XML resources.
+   * 
+   * @param system The associated system with this request.
+   * @param resource The name of the requested resource.
+   * @param uri The context information due to the requested URI.
+   * @param sec {@link SecurityContext} information.
+   * @param headers {@link HttpHeaders} information.
    * @return A collection of available resources.
    */
   @GET
   public Response getResource(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      @Context final UriInfo uri) {
+      @Context final UriInfo uri, @Context final SecurityContext sec,
+      @Context final HttpHeaders headers) {
+    System.out.println("*************** GET **************");
+    if(headers != null) {
+      System.out.println("headers not null");
+      List<String> authorization = headers.getRequestHeader(HttpHeaders.AUTHORIZATION);
+      for(String value : authorization) {
+      String[] values = value.split(" ");
+      System.out.println("Method: "+values[0]);
+      System.out.println("usr:pw encoded: "+values[1]);
+      String decoded = new String(Base64.decode(values[1]));
+      System.out.println("username: "+decoded.split(":")[0]);
+      System.out.println("pw: "+decoded.split(":")[1]);
+      
+      }
+
+    }
+    if(sec != null) {
+      System.out.println("secContext is not null");
+      final String secScheme = sec.getAuthenticationScheme();
+      if(secScheme != null) System.out.println("SecScheme: " + secScheme);
+      final Principal princ = sec.getUserPrincipal();
+      if(princ != null) System.out.println("Principal name: " + princ.getName());
+    } else {
+      System.out.println("SecContext is null");
+    }
+
     return getResource(system, uri, resource);
   }
 
   /**
    * This method will be called when a HTTP client sends a POST request to an
    * existing resource with 'application/query+xml' as Content-Type.
-   *
-   * @param system
-   *          The implementation system.
-   * @param resource
-   *          The resource name.
-   * @param input
-   *          The input stream.
+   * 
+   * @param system The implementation system.
+   * @param resource The resource name.
+   * @param input The input stream.
    * @return The {@link Response} which can be empty when no response is
    *         expected. Otherwise it holds the response XML file.
    */
@@ -78,13 +107,10 @@ public final class XMLResource extends AResource {
   /**
    * This method will be called when an HTTP client sends a POST request to an
    * existing resource to add a resource. Content-Type must be 'text/xml'.
-   *
-   * @param system
-   *          The implementation system.
-   * @param resource
-   *          The resource name.
-   * @param input
-   *          The input stream.
+   * 
+   * @param system The implementation system.
+   * @param resource The resource name.
+   * @param input The input stream.
    * @return The {@link Response} which can be empty when no response is
    *         expected. Otherwise it holds the response XML file.
    */
@@ -101,17 +127,14 @@ public final class XMLResource extends AResource {
   }
 
   /**
-   * This method will be called when a new XML file has to be stored within
-   * the database. The user request will be forwarded to this method.
-   * Afterwards it creates a response message with the 'created' HTTP status
-   * code, if the storing has been successful.
-   *
-   * @param system
-   *          The associated system with this request.
-   * @param resource
-   *          The name of the new resource.
-   * @param xml
-   *          The XML file as {@link InputStream} that will be stored.
+   * This method will be called when a new XML file has to be stored within the
+   * database. The user request will be forwarded to this method. Afterwards it
+   * creates a response message with the 'created' HTTP status code, if the
+   * storing has been successful.
+   * 
+   * @param system The associated system with this request.
+   * @param resource The name of the new resource.
+   * @param xml The XML file as {@link InputStream} that will be stored.
    * @return The HTTP status code as response.
    */
   @PUT
@@ -129,11 +152,9 @@ public final class XMLResource extends AResource {
   /**
    * This method will be called when an HTTP client sends a DELETE request to
    * delete an existing resource.
-   *
-   * @param system
-   *          The associated system with this request.
-   * @param resource
-   *          The name of the existing resource that has to be deleted.
+   * 
+   * @param system The associated system with this request.
+   * @param resource The name of the existing resource that has to be deleted.
    * @return The HTTP response code for this call.
    */
   @DELETE

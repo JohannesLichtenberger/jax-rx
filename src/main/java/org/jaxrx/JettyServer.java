@@ -1,22 +1,22 @@
 package org.jaxrx;
 
+import org.apache.shiro.web.servlet.IniShiroFilter;
 import org.jaxrx.core.JaxRxException;
+import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
-import org.mortbay.jetty.security.Constraint;
-import org.mortbay.jetty.security.ConstraintMapping;
-import org.mortbay.jetty.security.HashUserRealm;
-import org.mortbay.jetty.security.SecurityHandler;
 import org.mortbay.jetty.servlet.Context;
+import org.mortbay.jetty.servlet.FilterHolder;
 import org.mortbay.jetty.servlet.ServletHolder;
+
 import com.sun.jersey.spi.container.servlet.ServletContainer;
 
 /**
  * This is the main class to start the Jetty server to offer RESTful web
  * services support.
- *
- * @author Sebastian Graf, Christian Gruen, Patrick Lang, Lukas Lewandowski,
+ * 
+ * @author Sebastian Graf, Christian Gruen, Lukas Lewandowski,
  *         University of Konstanz
- *
+ * 
  */
 public final class JettyServer {
   /**
@@ -26,11 +26,9 @@ public final class JettyServer {
 
   /**
    * Constructor.
-   *
-   * @param port
-   *          web server port
-   * @throws Exception
-   *           exception
+   * 
+   * @param port web server port
+   * @throws Exception exception
    */
   public JettyServer(final int port) throws Exception {
     server = new Server(port);
@@ -49,56 +47,28 @@ public final class JettyServer {
 
   /**
    * Constructor.
-   *
-   * @param port
-   *          web server port
-   * @param authentication <code>true</code> if server has to authenticate,
-   *          <code>false</code> otherwise.
-   * @throws Exception
-   *           exception
+   * 
+   * @param port web server port
+   * @param shiroIniFile A {@link String} representation of the shiro
+   *          configuration file.
+   * @throws Exception exception
    */
-  public JettyServer(final int port, final boolean authentication)
+  public JettyServer(final int port, final String shiroIniFile)
       throws Exception {
     server = new Server(port);
-
-    // create a new constraint for authentication
-    Constraint constraint = new Constraint();
-    // choose possible authentication, e.g., Basic, Digest, Form, etc
-    constraint.setName(Constraint.__BASIC_AUTH);
-    // set allowed roles
-    constraint.setRoles(new String[] { "user", "admin", "read-only"});
-    // set authentication as "must have", not authenticated user will not be
-    // accepted
-    constraint.setAuthenticate(authentication);
-
-    // mapping of constraint to resource
-    ConstraintMapping cm = new ConstraintMapping();
-    cm.setConstraint(constraint);
-    // users have to authenticate on all available resources
-    cm.setPathSpec("/*");
-
-    // choosing of security handler
-    SecurityHandler sh = new SecurityHandler();
-
-    // possible realms are HashUserRealm, JDBCUserRealm and JAASUserRealm
-    sh.setUserRealm(new HashUserRealm("MyRealm",
-        System.getProperty("user.home") + "/realm.properties"));
-    // add constraintmapping
-    sh.setConstraintMappings(new ConstraintMapping[] { cm});
-
-    // add security handler to server instance
-    server.addHandler(sh);
-
     final ServletHolder servHolder = new ServletHolder(ServletContainer.class);
     servHolder.setInitParameter(
         "com.sun.jersey.config.property.resourceConfigClass",
         "com.sun.jersey.api.core.PackagesResourceConfig");
     servHolder.setInitParameter("com.sun.jersey.config.property.packages",
         "org.jaxrx.resource");
-
     final Context context = new Context(server, "/", Context.SESSIONS);
     context.addServlet(servHolder, "/");
+    final FilterHolder aFilter = new FilterHolder(IniShiroFilter.class);
+    aFilter.setInitParameter("config", shiroIniFile);
+    context.addFilter(aFilter, "/*", Handler.REQUEST);
     server.start();
+    System.out.println("Server started with authentication/authorization support");
   }
 
   /**
