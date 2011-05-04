@@ -120,7 +120,7 @@ public class ClientBlackBoxTest {
 		xmlResource = new XMLResource();
 		final InputStream testXML = ClientBlackBoxTest.class
 				.getResourceAsStream("/factbook.xml");
-		xmlResource.putResource(SYSTEMNAME, RESURI, testXML);
+		xmlResource.putResource(SYSTEMNAME, RESURI, null, testXML);
 		testXML.close();
 	}
 
@@ -129,7 +129,7 @@ public class ClientBlackBoxTest {
 	 */
 	@After
 	public void tearDown() {
-		xmlResource.deleteResource(SYSTEMNAME, RESURI);
+		xmlResource.deleteResource(SYSTEMNAME, RESURI, null);
 	}
 
 	/**

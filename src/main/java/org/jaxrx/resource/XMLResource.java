@@ -1,8 +1,6 @@
 package org.jaxrx.resource;
 
 import java.io.InputStream;
-import java.security.Principal;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,15 +13,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
 import org.jaxrx.JaxRx;
 import org.jaxrx.core.JaxRxConstants;
 import org.jaxrx.core.ResourcePath;
 import org.jaxrx.core.Systems;
-
-import com.sun.jersey.core.util.Base64;
 
 /**
  * This class match HTTP requests for the {@link JaxRxConstants#RESOURCEPATH}.
@@ -46,7 +41,6 @@ public final class XMLResource extends AResource {
    * @param system The associated system with this request.
    * @param resource The name of the requested resource.
    * @param uri The context information due to the requested URI.
-   * @param sec {@link SecurityContext} information.
    * @param headers {@link HttpHeaders} information.
    * @return A collection of available resources.
    */
@@ -54,34 +48,9 @@ public final class XMLResource extends AResource {
   public Response getResource(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      @Context final UriInfo uri, @Context final SecurityContext sec,
-      @Context final HttpHeaders headers) {
-    System.out.println("*************** GET **************");
-    if(headers != null) {
-      System.out.println("headers not null");
-      List<String> authorization = headers.getRequestHeader(HttpHeaders.AUTHORIZATION);
-      for(String value : authorization) {
-      String[] values = value.split(" ");
-      System.out.println("Method: "+values[0]);
-      System.out.println("usr:pw encoded: "+values[1]);
-      String decoded = new String(Base64.decode(values[1]));
-      System.out.println("username: "+decoded.split(":")[0]);
-      System.out.println("pw: "+decoded.split(":")[1]);
-      
-      }
+      @Context final UriInfo uri, @Context final HttpHeaders headers) {
 
-    }
-    if(sec != null) {
-      System.out.println("secContext is not null");
-      final String secScheme = sec.getAuthenticationScheme();
-      if(secScheme != null) System.out.println("SecScheme: " + secScheme);
-      final Principal princ = sec.getUserPrincipal();
-      if(princ != null) System.out.println("Principal name: " + princ.getName());
-    } else {
-      System.out.println("SecContext is null");
-    }
-
-    return getResource(system, uri, resource);
+    return getResource(system, uri, resource, headers);
   }
 
   /**
@@ -91,6 +60,7 @@ public final class XMLResource extends AResource {
    * @param system The implementation system.
    * @param resource The resource name.
    * @param input The input stream.
+   * @param headers HTTP header attributes.
    * @return The {@link Response} which can be empty when no response is
    *         expected. Otherwise it holds the response XML file.
    */
@@ -99,9 +69,8 @@ public final class XMLResource extends AResource {
   public Response postQuery(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      final InputStream input) {
-
-    return postQuery(system, input, resource);
+      @Context HttpHeaders headers, final InputStream input) {
+    return postQuery(system, input, resource, headers);
   }
 
   /**
@@ -110,6 +79,7 @@ public final class XMLResource extends AResource {
    * 
    * @param system The implementation system.
    * @param resource The resource name.
+   * @param headers HTTP header attributes.
    * @param input The input stream.
    * @return The {@link Response} which can be empty when no response is
    *         expected. Otherwise it holds the response XML file.
@@ -119,10 +89,10 @@ public final class XMLResource extends AResource {
   public Response postResource(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      final InputStream input) {
+      @Context final HttpHeaders headers, final InputStream input) {
 
     final JaxRx impl = Systems.getInstance(system);
-    final String info = impl.add(input, new ResourcePath(resource));
+    final String info = impl.add(input, new ResourcePath(resource, headers));
     return Response.created(null).entity(info).build();
   }
 
@@ -134,6 +104,7 @@ public final class XMLResource extends AResource {
    * 
    * @param system The associated system with this request.
    * @param resource The name of the new resource.
+   * @param headers HTTP header attributes.
    * @param xml The XML file as {@link InputStream} that will be stored.
    * @return The HTTP status code as response.
    */
@@ -142,10 +113,10 @@ public final class XMLResource extends AResource {
   public Response putResource(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      final InputStream xml) {
+      @Context final HttpHeaders headers, final InputStream xml) {
 
     final JaxRx impl = Systems.getInstance(system);
-    final String info = impl.update(xml, new ResourcePath(resource));
+    final String info = impl.update(xml, new ResourcePath(resource, headers));
     return Response.created(null).entity(info).build();
   }
 
@@ -155,15 +126,17 @@ public final class XMLResource extends AResource {
    * 
    * @param system The associated system with this request.
    * @param resource The name of the existing resource that has to be deleted.
+   * @param headers HTTP header attributes.
    * @return The HTTP response code for this call.
    */
   @DELETE
   public Response deleteResource(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
-      @PathParam(JaxRxConstants.RESOURCE) final String resource) {
+      @PathParam(JaxRxConstants.RESOURCE) final String resource,
+      @Context HttpHeaders headers) {
 
     final JaxRx impl = Systems.getInstance(system);
-    final String info = impl.delete(new ResourcePath(resource));
+    final String info = impl.delete(new ResourcePath(resource, headers));
     return Response.ok().entity(info).build();
   }
 }
