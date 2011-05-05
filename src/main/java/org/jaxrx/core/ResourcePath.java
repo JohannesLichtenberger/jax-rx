@@ -1,7 +1,9 @@
 package org.jaxrx.core;
 
 import java.util.Map;
+
 import javax.ws.rs.Path;
+import javax.ws.rs.core.HttpHeaders;
 
 /**
  * This class contains information on the resource path and query parameters of
@@ -15,13 +17,15 @@ public final class ResourcePath {
   private final Map<QueryParameter, String> params;
   /** Resource path. */
   private final String[] resource;
+  /** HTTP header attributes. */
+  private final HttpHeaders headers;
 
   /**
    * Constructs a new {@code ResourcePath}.
    * @param resourcePath resource path string
    */
   public ResourcePath(final String resourcePath) {
-    this(resourcePath, null);
+    this(resourcePath, null, null);
   }
 
   /**
@@ -33,10 +37,36 @@ public final class ResourcePath {
   public ResourcePath(final String resourcePath,
       final Map<QueryParameter, String> queryParameters) {
 
+    this(resourcePath, queryParameters, null);
+  }
+
+  /**
+   * Constructs a new {@code ResourcePath} with an additional
+   * {@link QueryParameter} map.
+   * @param resourcePath resource path string
+   * @param httpHeaders HTTP header attributes.
+   */
+  public ResourcePath(final String resourcePath, final HttpHeaders httpHeaders) {
+    this(resourcePath, null, httpHeaders);
+  }
+
+  /**
+   * Constructs a new {@code ResourcePath} with an additional
+   * {@link QueryParameter} map.
+   * @param resourcePath resource path string
+   * @param queryParameters query parameters
+   * @param httpHeaders HTTP header attributes.
+   */
+  public ResourcePath(final String resourcePath,
+      final Map<QueryParameter, String> queryParameters,
+      final HttpHeaders httpHeaders) {
+
     // chop trailing slashes, ignore empty steps
     final String[] rp = resourcePath.replaceAll("/+$", "").split("/");
     resource = rp.length == 1 && rp[0].isEmpty() ? new String[] { } : rp;
     params = queryParameters;
+    headers = httpHeaders;
+
   }
 
   /**
@@ -88,6 +118,14 @@ public final class ResourcePath {
    */
   public Map<QueryParameter, String> getQueryParameter() {
     return params;
+  }
+
+  /**
+   * Return HTTP headers from user request.
+   * @return HTTP headers.
+   */
+  public HttpHeaders getHttpHeaders() {
+    return headers;
   }
 
   @Override
