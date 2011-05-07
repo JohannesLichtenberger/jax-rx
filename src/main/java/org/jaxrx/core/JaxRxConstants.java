@@ -11,7 +11,12 @@ import javax.ws.rs.core.MediaType;
  *
  */
 public final class JaxRxConstants {
-	/**
+  /**
+   * Private empty constructor.
+   */
+  private JaxRxConstants() { }
+
+  /**
 	 * The path of the underlying system.
 	 */
 	public static final String SYSTEM = "system";
@@ -73,9 +78,13 @@ public final class JaxRxConstants {
 	public static final String RESOURCEPATH = JAXRXPATH + "/{" + RESOURCE
 			+ ":.+}";
 
-	/**
-	 * Private empty constructor.
-	 */
-	private JaxRxConstants() {
-	}
+  /**
+   * System path property.
+   */
+  public static final String PATHPROP = "org.jaxrx.systemPath";
+
+  /**
+   * System name property.
+   */
+  public static final String NAMEPROP = "org.jaxrx.systemName";
 }

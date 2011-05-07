@@ -15,6 +15,7 @@ import java.net.URL;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jaxrx.JettyServer;
+import org.jaxrx.core.JaxRxConstants;
 import org.jaxrx.resource.XMLResource;
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class ClientBlackBoxTest {
 	 * This field contains the user specified system name.
 	 */
 	private final transient String SYSPROPERTY = System
-			.getProperty("org.jaxrx.systemPath");
+			.getProperty(JaxRxConstants.PATHPROP);
 
 	/**
 	 * This field specifies the system name. Either the new specified by the

@@ -24,13 +24,13 @@ public final class Systems {
 		/**
 		 * The implementation paths.
 		 */
-		IMPLEMENTATION("org.jaxrx.systemPath", "org.jaxrx.dom.DOMJaxRx"),
+		IMPLEMENTATION(JaxRxConstants.PATHPROP, "org.jaxrx.dom.DOMJaxRx"),
 
 		/**
 		 * Default package. This results in a look up related to the system
 		 * properties for a org.jaxrx.systemPath-key
 		 */
-		SYSTEMNAME("org.jaxrx.systemName", "dom");
+		SYSTEMNAME(JaxRxConstants.NAMEPROP, "dom");
 
 		/** System key. */
 		final String key;
