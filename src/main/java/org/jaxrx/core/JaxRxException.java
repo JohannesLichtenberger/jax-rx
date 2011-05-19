@@ -1,6 +1,7 @@
 package org.jaxrx.core;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -23,17 +24,27 @@ public final class JaxRxException extends WebApplicationException {
 	 */
 	public JaxRxException(final int status, final String message) {
 		super(Response.status(status).entity(message).
-		    type("text/plain").build());
+		    type(MediaType.TEXT_PLAIN).build());
 	}
 
-	/**
-	 * Constructor, wrapping the specified exception and setting 500 as HTTP
-	 * status code.
-	 *
-	 * @param exception
-	 *            exception to be wrapped
-	 */
-	public JaxRxException(final Exception exception) {
-		this(500, exception.getMessage());
-	}
+  /**
+   * Constructor, wrapping the specified exception and setting 500 as HTTP
+   * status code.
+   *
+   * @param exception
+   *            exception to be wrapped
+   */
+  public JaxRxException(final Exception exception) {
+    this(500, exception.getMessage());
+  }
+
+  /**
+   * Constructor, using a {@link Response} reference.
+   *
+   * @param response
+   *            response to be passed on
+   */
+  public JaxRxException(final Response response) {
+    super(response);
+  }
 }
