@@ -92,7 +92,7 @@ abstract class AResource {
       final Scanner sc = new Scanner(op);
       sc.useDelimiter(",");
       while(sc.hasNext()) {
-        String[] sp = sc.next().split("=", 2);
+        final String[] sp = sc.next().split("=", 2);
         if(sp.length == 1) continue;
         if(sp[0].equals(METHOD)) {
           for(final String[] m : METHODS)

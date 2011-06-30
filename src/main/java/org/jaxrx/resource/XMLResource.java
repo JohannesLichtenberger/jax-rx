@@ -69,7 +69,7 @@ public final class XMLResource extends AResource {
   public Response postQuery(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      @Context HttpHeaders headers, final InputStream input) {
+      @Context final HttpHeaders headers, final InputStream input) {
     return postQuery(system, input, resource, headers);
   }
 
@@ -133,7 +133,7 @@ public final class XMLResource extends AResource {
   public Response deleteResource(
       @PathParam(JaxRxConstants.SYSTEM) final String system,
       @PathParam(JaxRxConstants.RESOURCE) final String resource,
-      @Context HttpHeaders headers) {
+      @Context final HttpHeaders headers) {
 
     final JaxRx impl = Systems.getInstance(system);
     final String info = impl.delete(new ResourcePath(resource, headers));
