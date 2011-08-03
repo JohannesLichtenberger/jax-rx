@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jaxrx</groupId>
 	<artifactId>jax-rx</artifactId>
 	<packaging>war</packaging>
 	<name>JAX-RX</name>
-	<version>1.3.1</version>
+	<version>1.3.2-SNAPSHOT</version>
+  <properties>
+    <compileSource>1.6</compileSource>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
 	<description>JAX-RX represents a thin REST-based interface layer to provide a unified access to XML databases and resources.</description>
 	<repositories>
 		<repository>
@@ -15,11 +20,6 @@
 			<url>http://download.java.net/maven/2</url>
 		</repository>
 	</repositories>
-	<scm>
-		<connection>scm:svn:https://svn.uni-konstanz.de/dbis/basex/trunk/jax-rx</connection>
-		<developerConnection>scm:svn:https://svn.uni-konstanz.de/dbis/basex/trunk/jax-rx/</developerConnection>
-		<url>https://svn.uni-konstanz.de/dbis/basex/trunk/jax-rx/</url>
-	</scm>
 	<reporting>
 		<plugins>
 			<plugin>
@@ -71,7 +71,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.2</version>
+				<version>2.5</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
@@ -101,44 +101,20 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<!-- the implementation of JAX-RS -->
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>1.6</version>
+			<version>1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty</artifactId>
-			<version>6.1.25</version>
+			<version>6.1.26</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.5</version>
+			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- Logging 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>0.9.24</version>
-		</dependency>
-		-->
 	</dependencies>
-
-	<properties>
-		<compileSource>1.6</compileSource>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 </project>
