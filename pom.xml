@@ -6,7 +6,7 @@
 	<artifactId>jax-rx</artifactId>
 	<packaging>war</packaging>
 	<name>JAX-RX</name>
-	<version>1.3.2-SNAPSHOT</version>
+	<version>1.3.2</version>
   <properties>
     <compileSource>1.6</compileSource>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

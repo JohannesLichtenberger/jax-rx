@@ -22,26 +22,32 @@ public final class JettyServer {
   private transient Server server;
 
   /**
-   * Constructor.
+   * Constructor, creating and starting a new server. 
    * 
    * @param port web server port
    * @throws Exception exception
    */
   public JettyServer(final int port) throws Exception {
     server = new Server(port);
-
-    final ServletHolder servHolder = new ServletHolder(ServletContainer.class);
-    servHolder.setInitParameter(
-        "com.sun.jersey.config.property.resourceConfigClass",
-        "com.sun.jersey.api.core.PackagesResourceConfig");
-    servHolder.setInitParameter("com.sun.jersey.config.property.packages",
-        "org.jaxrx.resource");
-
-    final Context context = new Context(server, "/", Context.SESSIONS);
-    context.addServlet(servHolder, "/");
+    register(server);
     server.start();
   }
 
+  /**
+   * Constructor, attaching JAX-RX to the specified server.
+   * 
+   * @param s server instance
+   */
+  public static void register(final Server s) {
+    final ServletHolder sh = new ServletHolder(ServletContainer.class);
+    sh.setInitParameter(
+        "com.sun.jersey.config.property.resourceConfigClass",
+        "com.sun.jersey.api.core.PackagesResourceConfig");
+    sh.setInitParameter("com.sun.jersey.config.property.packages",
+        "org.jaxrx.resource");
+
+    new Context(s, "/", Context.SESSIONS).addServlet(sh, "/");
+  }
 
   /**
    * Stops the server.
