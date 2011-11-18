@@ -136,7 +136,10 @@
 				</configuration>
 			</plugin>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> trunk
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>downloads-maven-plugin</artifactId>
@@ -172,6 +175,9 @@
 					</execution>
 				</executions>
 			</plugin>
+<<<<<<< HEAD
+>>>>>>> trunk
+=======
 >>>>>>> trunk
 		</plugins>
 	</build>
