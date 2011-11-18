@@ -8,6 +8,5 @@ interact with the database. This REST implementation is represented by
 =======
 >>>>>>> trunk
 provide unified access to XML databases and resources.
-JAX-RX uses the HTTP Server [http://jetty.codehaus.org/jetty Jetty].
 
 
