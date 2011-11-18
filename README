@@ -2,11 +2,6 @@ REST ([http://en.wikipedia.org/wiki/Representational_State_Transfer REpresentati
 facilitates a simple and fast access to databases through HTTP.
 The HTTP methods GET, PUT, DELETE, and POST can be applied to
 interact with the database. This REST implementation is represented by
-[https://github.com/sebastiangraf/jax-rx JAX-RX], an interface layer to
-<<<<<<< HEAD
->>>>>>> trunk
-=======
->>>>>>> trunk
-provide unified access to XML databases and resources.
+[https://github.com/sebastiangraf/jax-rx JAX-RX], an interface layer to provide unified access to XML databases and resources.
 
 
