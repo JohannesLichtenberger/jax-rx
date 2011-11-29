@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<description>JAX-RX represents a thin REST-based interface layer to provide a unified access to XML databases and resources.</description>
-	<url>https://github.com/sebastiangraf/jax-rx</url>
+	<url>https://github.com/disy/jax-rx</url>
 	<issueManagement>
 		<url>https://github.com/sebastiangraf/jax-rx/issues</url>
 		<system>GitHub Issues</system>
@@ -30,9 +30,9 @@
 		<url>http://ci.disy.inf.uni-konstanz.de</url>
 	</ciManagement>
 	<scm>
-		<url>https://github.com/sebastiangraf/jax-rx</url>
-		<connection>scm:git:git://github.com/sebastiangraf/jax-rx.git</connection>
-		<developerConnection>scm:git:git@github.com:sebastiangraf/jax-rx.git</developerConnection>
+		<url>https://github.com/disy/jax-rx</url>
+		<connection>scm:git:git://github.com/disy/jax-rx.git</connection>
+		<developerConnection>scm:git:git@github.com:disy/jax-rx.git</developerConnection>
 	</scm>
 	<organization>
 		<name>University of Konstanz, Distributed System Group</name>
