@@ -15,7 +15,7 @@
 	<description>JAX-RX represents a thin REST-based interface layer to provide a unified access to XML databases and resources.</description>
 	<url>https://github.com/disy/jax-rx</url>
 	<issueManagement>
-		<url>https://github.com/disy/jax-rx/issues</url>
+		<url>https://github.com/sebastiangraf/jax-rx/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 	<licenses>
@@ -139,11 +139,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> trunk
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>downloads-maven-plugin</artifactId>
@@ -179,10 +174,6 @@
 					</execution>
 				</executions>
 			</plugin>
-<<<<<<< HEAD
->>>>>>> trunk
-=======
->>>>>>> trunk
 		</plugins>
 	</build>
 	<dependencies>
