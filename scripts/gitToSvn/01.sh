@@ -28,10 +28,14 @@
 
 
 ###SCRIPT FOR CI###
-#setting error to false, not beautiful but efficient because of updating/merging
+###(GITHUB->SVN SYNCING)###
+###FIRST STEP, GETTING THE DATA
 set +e
-#submitting to github
-git checkout master
-git merge trunk
-git push origin
+#getting the github data
+git pull
+#getting disy data
+git svn fetch
+#switching to svn-branch, only temporary since it is for testing only
+#normally: git checkout refs/remotes/git-svn
+git checkout refs/remotes/git-svn
 exit 0
