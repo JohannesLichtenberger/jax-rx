@@ -1,6 +1,6 @@
 
 ===========================================================================
-Perfidix - No discussions, Just facts.
+JAX-RX - REST on XML easy made
 ============================================================================
 
 6 steps how to use Perfidix:
@@ -19,9 +19,9 @@ Content
 
 README					this readme file
 LICENSE	 				license file
-Perclipse				Source folder for Eclipse-Perfidix Plugin
-perfidix				Source folder for perfidix itself
+src						Source folder containing all java stuff
 scripts					bash scripts for syncing against disy-internal repo.
+WEB-INF					folder for web.xml
 pom.xml					Simple pom (yes we do use Maven)
 
 -----------------------------------------------------------------------------
@@ -34,10 +34,11 @@ This work is released in the public domain under the BSD 3-clause license
 Further information
 -----------------------------------------------------------------------------
 
-The documentation so far is accessible under http://perfidix.org (pointing to http://disy.github.com/perfidix/).
+The documentation so far is accessible under http://disy.github.com/jax-rx/).
 
-The framework was presented at the Jazoon '07 as work in progress:
-http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-opus-84446
+The framework was documented as tech report:
+http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-opus-120511
+Furthermore it acts as blueprint for Hecate (http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-126237).
 
 Any questions, just contact sebastian.graf AT uni-konstanz.de
 
@@ -45,16 +46,11 @@ Any questions, just contact sebastian.graf AT uni-konstanz.de
 Involved People
 -----------------------------------------------------------------------------
 
-Perfidix 1.0 was first build by:
-- Alexander Onea
-- Tim Petrowski
-under the supervision of Marc Kramis.
+JAX-RX was original developed by 
+- Lukas Lewandowski
+under the supervision of Christian Grün and Sebastian Graf.
 
-Since version 2.0, Perfidix is maintained by
-- Sebastian Graf (Perfidix Core & Project Lead)
-- Lukas Lewandowski (Perclipse Plugin)
-with contributions from:
-- Bastian Lemke (Graph Output)
-- Nuray Gürler (Mocking)
-
+Being associated and maintained the BaseX-group, it was 2011 moved to Disy and is maintained by
+- Sebastian Graf
+- Lukas Lewandowski
 
