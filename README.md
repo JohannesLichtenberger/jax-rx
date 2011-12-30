@@ -31,9 +31,10 @@ Further information
 
 The documentation so far is accessible under http://disy.github.com/jax-rx/.
 
-The framework was documented as tech report:
-http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-opus-120511
-Furthermore it acts as blueprint for Hecate (http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-126237).
+The following additional documentation is accessbile:
+
+* TechReport: http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-opus-120511 
+* Hecate http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-126237
 
 Any questions, just contact sebastian.graf AT uni-konstanz.de
 
