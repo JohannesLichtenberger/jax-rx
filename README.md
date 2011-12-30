@@ -31,10 +31,10 @@ Further information
 
 The documentation so far is accessible under http://disy.github.com/jax-rx/.
 
-The following additional documentation is accessbile:
+The following additional documentation is accessible:
 
-* TechReport: http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-opus-120511 
-* Hecate http://kops.ub.uni-konstanz.de/handle/urn:nbn:de:bsz:352-126237
+* TechReport: http://nbn-resolving.de/urn:nbn:de:bsz:352-opus-120511
+* Hecate: http://nbn-resolving.de/urn:nbn:de:bsz:352-126237
 
 Any questions, just contact sebastian.graf AT uni-konstanz.de
 
@@ -42,7 +42,7 @@ Any questions, just contact sebastian.graf AT uni-konstanz.de
 Involved People
 -------
 
-JAX-RX was original developed by 
+JAX-RX was originally developed by 
 
 * Lukas Lewandowski
 
