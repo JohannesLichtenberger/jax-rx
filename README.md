@@ -8,6 +8,7 @@ The HTTP methods GET, PUT, DELETE, and POST can be applied to
 interact with the database. This REST implementation is represented by
 JAX-RX, an interface layer to provide unified access to XML databases and resources.
 
+[![Build Status](https://secure.travis-ci.org/disy/jax-rx.png)](http://travis-ci.org/disy/jax-rx)
 
 Content
 -------
