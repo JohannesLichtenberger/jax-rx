@@ -40,7 +40,6 @@ public enum QueryParameter {
 	COMMAND,
 	/** Query file to process. */
 	RUN,
-
 	/** Choose revision to work on. */
 	REVISION,
 	/** Serialization parameters. */
@@ -53,6 +52,6 @@ public enum QueryParameter {
 	START,
 	/** Number of results to print. */
 	COUNT,
-  /** External variable. */
-  VAR;
+	/** External variable. */
+	VAR;
 }

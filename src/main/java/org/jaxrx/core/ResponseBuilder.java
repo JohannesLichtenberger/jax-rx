@@ -56,12 +56,12 @@ public final class ResponseBuilder {
 	}
 
 	/**
-	 * This method creates a new {@link Document} instance for the surrounding
-	 * XML element for the client response.
+	 * This method creates a new {@link Document} instance for the surrounding XML
+	 * element for the client response.
 	 *
 	 * @return The created {@link Document} instance.
 	 * @throws ParserConfigurationException
-	 *             The exception occurred.
+	 *           The exception occurred.
 	 */
 	private static Document createSurroundingXMLResp()
 			throws ParserConfigurationException {
@@ -75,9 +75,9 @@ public final class ResponseBuilder {
 	 * database.
 	 *
 	 * @param pathResource
-	 *            The list with the path of the available resources.
+	 *          The list with the path of the available resources.
 	 * @param document
-	 *            The XML {@link Document} instance.
+	 *          The XML {@link Document} instance.
 	 * @return A list of XML {@link Element} as the collection.
 	 */
 	private static List<Element> createCollectionElement(
@@ -85,8 +85,8 @@ public final class ResponseBuilder {
 
 		final List<Element> collections = new ArrayList<Element>();
 		for (final String path : pathResource) {
-			final Element collection = document.createElementNS(
-					JaxRxConstants.URL, JaxRxConstants.JAXRX + ":resource");
+			final Element collection = document.createElementNS(JaxRxConstants.URL,
+					JaxRxConstants.JAXRX + ":resource");
 			collection.setAttribute("name", path);
 			collections.add(collection);
 		}
@@ -97,7 +97,7 @@ public final class ResponseBuilder {
 	 * This method creates the response XML element.
 	 *
 	 * @param document
-	 *            The {@link Document} instance for the response.
+	 *          The {@link Document} instance for the response.
 	 * @return The created XML {@link Element}.
 	 */
 	private static Element createResultElement(final Document document) {
@@ -109,7 +109,7 @@ public final class ResponseBuilder {
 	 * Builds a DOM response.
 	 *
 	 * @param availableResources
-	 *            list of resources to include in the output
+	 *          list of resources to include in the output
 	 * @return streaming output
 	 */
 	public static StreamingOutput buildDOMResponse(
@@ -135,7 +135,7 @@ public final class ResponseBuilder {
 	 * Creates an output stream from the specified document.
 	 *
 	 * @param doc
-	 *            document input
+	 *          document input
 	 * @return output stream
 	 */
 	public static StreamingOutput createStream(final Document doc) {
@@ -148,8 +148,7 @@ public final class ResponseBuilder {
 					final StreamResult streamResult = new StreamResult(output);
 					Transformer transformer;
 					try {
-						transformer = TransformerFactory.newInstance()
-								.newTransformer();
+						transformer = TransformerFactory.newInstance().newTransformer();
 						transformer.transform(domSource, streamResult);
 					} catch (final TransformerException exc) {
 						exc.printStackTrace();

@@ -93,7 +93,8 @@ public final class DOMJaxRx implements JaxRx {
 	}
 
 	@Override
-	public synchronized StreamingOutput query(final String query, final ResourcePath path) {
+	public synchronized StreamingOutput query(final String query,
+			final ResourcePath path) {
 		final XPathFactory xpathFac = XPathFactory.newInstance();
 		final XPath xpath = xpathFac.newXPath();
 
@@ -103,26 +104,23 @@ public final class DOMJaxRx implements JaxRx {
 				final Document currentDoc = path.getDepth() == 0 ? null : DOMs
 						.getDOM(root(path));
 				try {
-					final NodeList resultNodeList = (NodeList) xpath.evaluate(
-							query, currentDoc, XPathConstants.NODESET);
+					final NodeList resultNodeList = (NodeList) xpath.evaluate(query,
+							currentDoc, XPathConstants.NODESET);
 
-					final Transformer transformer = TransformerFactory
-							.newInstance().newTransformer();
-					final Map<QueryParameter, String> params = path
-							.getQueryParameter();
+					final Transformer transformer = TransformerFactory.newInstance()
+							.newTransformer();
+					final Map<QueryParameter, String> params = path.getQueryParameter();
 					final boolean wrap = path.getValue(QueryParameter.WRAP) == null
 							|| path.getValue(QueryParameter.WRAP).equals("yes");
-					transformer.setOutputProperty(
-							OutputKeys.OMIT_XML_DECLARATION, "yes");
+					transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 					if (wrap) {
-						output
-								.write("<jaxrx:result xmlns:jaxrx=\"http://jaxrx.org/\">"
-										.getBytes());
+						output.write("<jaxrx:result xmlns:jaxrx=\"http://jaxrx.org/\">"
+								.getBytes());
 					}
 					for (int i = 0; i < resultNodeList.getLength(); i++) {
 						final Node node = resultNodeList.item(i);
-						transformer.transform(new DOMSource(node),
-								new StreamResult(output));
+						transformer
+								.transform(new DOMSource(node), new StreamResult(output));
 					}
 					if (wrap)
 						output.write("</jaxrx:result>".getBytes());
@@ -152,17 +150,19 @@ public final class DOMJaxRx implements JaxRx {
 	}
 
 	@Override
-	public synchronized String add(final InputStream input, final ResourcePath path) {
-	  return "Nothing done";
+	public synchronized String add(final InputStream input,
+			final ResourcePath path) {
+		return "Nothing done";
 	}
 
 	@Override
-	public synchronized String update(final InputStream input, final ResourcePath path) {
+	public synchronized String update(final InputStream input,
+			final ResourcePath path) {
 		try {
 			final Document document = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder().parse(input);
 			DOMs.putDOM(document, root(path));
-      return "Document updated.";
+			return "Document updated.";
 		} catch (final ParserConfigurationException exc) {
 			throw new JaxRxException(exc);
 		} catch (final SAXException exc) {
@@ -175,14 +175,14 @@ public final class DOMJaxRx implements JaxRx {
 	@Override
 	public String delete(final ResourcePath path) {
 		DOMs.deleteDOM(root(path));
-    return "Document deleted.";
+		return "Document deleted.";
 	}
 
 	/**
 	 * Returns the root resource of the specified path.
 	 *
 	 * @param path
-	 *            path
+	 *          path
 	 * @return root resource
 	 */
 	static String root(final ResourcePath path) {

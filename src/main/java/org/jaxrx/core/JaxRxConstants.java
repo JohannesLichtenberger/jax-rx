@@ -37,12 +37,13 @@ import javax.ws.rs.core.MediaType;
  *
  */
 public final class JaxRxConstants {
-  /**
-   * Private empty constructor.
-   */
-  private JaxRxConstants() { }
+	/**
+	 * Private empty constructor.
+	 */
+	private JaxRxConstants() {
+	}
 
-  /**
+	/**
 	 * The path of the underlying system.
 	 */
 	public static final String SYSTEM = "system";
@@ -52,30 +53,28 @@ public final class JaxRxConstants {
 	 */
 	public static final String JAXRX = "jax-rx";
 
-  /**
-   * Name of resource itself.
-   */
-  public static final String RESOURCE = "resource";
+	/**
+	 * Name of resource itself.
+	 */
+	public static final String RESOURCE = "resource";
 
-  /**
-   * Output method parameter.
-   */
-  public static final String METHOD = "method";
+	/**
+	 * Output method parameter.
+	 */
+	public static final String METHOD = "method";
 
-  /**
-   * Output media-type parameter.
-   */
-  public static final String MEDIATYPE = "media-type";
+	/**
+	 * Output media-type parameter.
+	 */
+	public static final String MEDIATYPE = "media-type";
 
-  /**
-   * Support output methods.
-   */
-  public static final String[][] METHODS = {
-    { "xml"  , MediaType.APPLICATION_XML },
-    { "xhtml", MediaType.APPLICATION_XHTML_XML },
-    { "html" , MediaType.TEXT_HTML },
-    { "text" , MediaType.TEXT_PLAIN },
-  };
+	/**
+	 * Support output methods.
+	 */
+	public static final String[][] METHODS = {
+			{ "xml", MediaType.APPLICATION_XML },
+			{ "xhtml", MediaType.APPLICATION_XHTML_XML },
+			{ "html", MediaType.TEXT_HTML }, { "text", MediaType.TEXT_PLAIN }, };
 
 	/**
 	 * The interface URL.
@@ -104,13 +103,13 @@ public final class JaxRxConstants {
 	public static final String RESOURCEPATH = JAXRXPATH + "/{" + RESOURCE
 			+ ":.+}";
 
-  /**
-   * System path property.
-   */
-  public static final String PATHPROP = "org.jaxrx.systemPath";
+	/**
+	 * System path property.
+	 */
+	public static final String PATHPROP = "org.jaxrx.systemPath";
 
-  /**
-   * System name property.
-   */
-  public static final String NAMEPROP = "org.jaxrx.systemName";
+	/**
+	 * System name property.
+	 */
+	public static final String NAMEPROP = "org.jaxrx.systemName";
 }

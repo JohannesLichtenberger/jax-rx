@@ -67,9 +67,9 @@ public final class Systems {
 		 * Constructor.
 		 *
 		 * @param paramKey
-		 *            key
+		 *          key
 		 * @param paramValue
-		 *            value
+		 *          value
 		 */
 		private Sys(final String paramKey, final String paramValue) {
 			this.key = paramKey;
@@ -89,8 +89,7 @@ public final class Systems {
 	private static final Map<String, String> SYSTEMSIMPLS = new HashMap<String, String>();
 
 	/**
-	 * The map holds the instances representing the classes of the
-	 * implementation.
+	 * The map holds the instances representing the classes of the implementation.
 	 */
 	private static final Map<String, JaxRx> INSTANCES = new HashMap<String, JaxRx>();
 
@@ -113,8 +112,7 @@ public final class Systems {
 	}
 
 	/**
-	 * Getting all available systems as keys and implementing packages as
-	 * values.
+	 * Getting all available systems as keys and implementing packages as values.
 	 *
 	 * @return the systems implementations
 	 */
@@ -127,7 +125,7 @@ public final class Systems {
 	 * unknown, throws an exception.
 	 *
 	 * @param impl
-	 *            implementation to be checked.
+	 *          implementation to be checked.
 	 * @return instances
 	 */
 	public static JaxRx getInstance(final String impl) {

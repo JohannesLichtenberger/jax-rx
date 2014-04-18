@@ -44,33 +44,33 @@ public final class JaxRxException extends WebApplicationException {
 	 * message.
 	 *
 	 * @param status
-	 *            HTTP status code
+	 *          HTTP status code
 	 * @param message
-	 *            status message
+	 *          status message
 	 */
 	public JaxRxException(final int status, final String message) {
-		super(Response.status(status).entity(message).
-		    type(MediaType.TEXT_PLAIN).build());
+		super(Response.status(status).entity(message).type(MediaType.TEXT_PLAIN)
+				.build());
 	}
 
-  /**
-   * Constructor, wrapping the specified exception and setting 500 as HTTP
-   * status code.
-   *
-   * @param exception
-   *            exception to be wrapped
-   */
-  public JaxRxException(final Exception exception) {
-    this(500, exception.getMessage());
-  }
+	/**
+	 * Constructor, wrapping the specified exception and setting 500 as HTTP
+	 * status code.
+	 *
+	 * @param exception
+	 *          exception to be wrapped
+	 */
+	public JaxRxException(final Exception exception) {
+		this(500, exception.getMessage());
+	}
 
-  /**
-   * Constructor, using a {@link Response} reference.
-   *
-   * @param response
-   *            response to be passed on
-   */
-  public JaxRxException(final Response response) {
-    super(response);
-  }
+	/**
+	 * Constructor, using a {@link Response} reference.
+	 *
+	 * @param response
+	 *          response to be passed on
+	 */
+	public JaxRxException(final Response response) {
+		super(response);
+	}
 }

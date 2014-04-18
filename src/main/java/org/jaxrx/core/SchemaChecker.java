@@ -58,25 +58,25 @@ public final class SchemaChecker {
 	 * Constructor.
 	 *
 	 * @param schema
-	 *            schema to check
+	 *          schema to check
 	 */
 	public SchemaChecker(final String schema) {
 		xslSchema = "/" + schema + ".xsd";
 	}
 
 	/**
-	 * This method parses an XML input with a W3C DOM implementation and
-	 * validates it then with the available XML schema.
+	 * This method parses an XML input with a W3C DOM implementation and validates
+	 * it then with the available XML schema.
 	 *
 	 * @param input
-	 *            The input stream containing the XML query.
+	 *          The input stream containing the XML query.
 	 * @return The parsed XML source as {@link Document}.
 	 */
 	public Document check(final InputStream input) {
 		Document document;
 		try {
-			final DocumentBuilder docBuilder = DocumentBuilderFactory
-					.newInstance().newDocumentBuilder();
+			final DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance()
+					.newDocumentBuilder();
 			document = docBuilder.parse(input);
 
 			final InputStream is = getClass().getResourceAsStream(xslSchema);
@@ -97,13 +97,13 @@ public final class SchemaChecker {
 	 * schema. If not, an exception is thrown
 	 *
 	 * @param document
-	 *            The parsed document.
+	 *          The parsed document.
 	 * @param source
-	 *            The {@link String} representation of the XML schema file.
+	 *          The {@link String} representation of the XML schema file.
 	 * @throws SAXException
-	 *             if the document is invalid
+	 *           if the document is invalid
 	 * @throws IOException
-	 *             if the input cannot be read
+	 *           if the input cannot be read
 	 */
 	private void checkIsValid(final Document document, final Source source)
 			throws SAXException, IOException {

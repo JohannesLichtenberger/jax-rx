@@ -55,96 +55,107 @@ import org.xml.sax.SAXException;
 
 /**
  * This class is a client app test for this JAX-RX layer.
- *
+ * 
  * @author Sebastian Graf, Christian Gruen, Lukas Lewandowski, University of
  *         Konstanz
- *
+ * 
  */
 public class ClientBlackBoxTest {
 
 	/**
 	 * The XMLResource field.
 	 */
-	private transient XMLResource xmlResource;
+	private XMLResource xmlResource;
 
 	/**
 	 * This field contains the user specified system name.
 	 */
-	private final transient String SYSPROPERTY = System
+	private final String SYSPROPERTY = System
 			.getProperty(JaxRxConstants.PATHPROP);
 
 	/**
 	 * This field specifies the system name. Either the new specified by the
 	 * underlying implementation or DOM.
 	 */
-	private final transient String SYSTEMNAME = SYSPROPERTY == null ? "dom"
-			: SYSPROPERTY;
+	private final String SYSTEMNAME = SYSPROPERTY == null ? "dom" : SYSPROPERTY;
 
 	/**
 	 * This field specifies the requested URL resource. This example requests a
 	 * light version of factbook.
 	 */
-	private final transient String RESURI = "factbookLite";
+	private final String RESURI = "factbookLite";
 
 	/**
 	 * This field specifies the server port.
 	 */
-	private final transient static int PORT = 8091;
+	private final static int PORT = 8091;
 
 	/**
 	 * Name of JAX-RX resource.
 	 */
-	private final transient String JAXRX = "jax-rx";
+	private final String JAXRX = "jax-rx";
 
 	/**
 	 * This field specifies the XML tag name country for test evaluation.
 	 */
-	private final transient String COUNTRY = "country";
+	private final String COUNTRY = "country";
 
 	/**
 	 * This field specifies the XML tag name jaxrx-result (result node) for test
 	 * evaluation.
 	 */
-	private final transient String RESULTNODE = "jaxrx:result";
+	private final String RESULTNODE = "jaxrx:result";
+
+	private static final JettyServer SERVER = new JettyServer(PORT);
 
 	/**
 	 * This field specifies the request URL to the server.
 	 */
-	private final transient URL REQURL;
+	private URL REQURL;
 
 	/**
 	 * This field specifies the connection to the URL.
 	 */
-	private transient HttpURLConnection connection;
+	private HttpURLConnection connection;
 
-	/**
-	 * This method
-	 *
-	 * @throws MalformedURLException URL exception
-	 */
-	public ClientBlackBoxTest() throws MalformedURLException {
-		REQURL = new URL("http://localhost:" + PORT + "/" + SYSTEMNAME + "/"
-				+ JAXRX + "/" + RESURI);
-	}
+	// /**
+	// * This method
+	// *
+	// * @throws MalformedURLException
+	// * URL exception
+	// */
+	// public ClientBlackBoxTest() throws MalformedURLException {
+	// REQURL = new URL("http://localhost:" + PORT + "/" + SYSTEMNAME + "/"
+	// + JAXRX + "/" + RESURI);
+	// }
 
-	/**
-	 * Global set up to start the server.
-   *
-   * @throws Exception any exception
-	 */
-	@BeforeClass
-	public static void globSetUp() throws Exception {
-		new JettyServer(PORT);
-	}
+	// /**
+	// * Global set up to start the server.
+	// *
+	// * @throws Exception
+	// * any exception
+	// */
+	// @BeforeClass
+	// public static void globSetUp() throws Exception {
+	// // _server = new Server();
+	// // _connector = new ServerConnector(_server);
+	// // _server.setConnectors(new Connector[] { _connector });
+	// // _server.start();
+	// // int port = _connector.getLocalPort();
+	// new JettyServer(PORT);
+	// }
 
 	/**
 	 * Simple setUp method.
-	 *
-	 * @throws Exception any exception
+	 * 
+	 * @throws Exception
+	 *           any exception
 	 */
 	@Before
 	public void setUp() throws Exception {
 		xmlResource = new XMLResource();
+		REQURL = new URL("http://localhost:" + PORT + "/" + SYSTEMNAME + "/"
+				+ JAXRX + "/" + RESURI);
 		final InputStream testXML = ClientBlackBoxTest.class
 				.getResourceAsStream("/factbook.xml");
 		xmlResource.putResource(SYSTEMNAME, RESURI, null, testXML);
@@ -162,10 +173,13 @@ public class ClientBlackBoxTest {
 	/**
 	 * This method tests the simple get method without additional query
 	 * parameters.
-	 *
-	 * @throws IOException I/O exception
-	 * @throws ParserConfigurationException parser exception
-	 * @throws SAXException SAX exception
+	 * 
+	 * @throws IOException
+	 *           I/O exception
+	 * @throws ParserConfigurationException
+	 *           parser exception
+	 * @throws SAXException
+	 *           SAX exception
 	 */
 	@Test
 	public void testGetRes() throws IOException, SAXException,
@@ -181,8 +195,8 @@ public class ClientBlackBoxTest {
 			NodeList nodes = doc.getElementsByTagName(COUNTRY);
 			assertTrue("Check if more than one result", nodes.getLength() > 1);
 			nodes = doc.getElementsByTagName(RESULTNODE);
-			assertTrue("Check if result node is not in result: ", nodes
-					.getLength() == 0);
+			assertTrue("Check if result node is not in result: ",
+					nodes.getLength() == 0);
 		}
 		assertEquals("Test if get request has been performed successful",
 				HttpURLConnection.HTTP_OK, code);
@@ -194,10 +208,8 @@ public class ClientBlackBoxTest {
 
 		if (code == HttpURLConnection.HTTP_OK) {
 			final Document document = xmlDocument(connection.getInputStream());
-			final NodeList nodes = document
-					.getElementsByTagName("jax-rx:resource");
-			assertEquals("Test if 1 resource is available", 1, nodes
-					.getLength());
+			final NodeList nodes = document.getElementsByTagName("jax-rx:resource");
+			assertEquals("Test if 1 resource is available", 1, nodes.getLength());
 		}
 		assertEquals("Test if the request has been successful",
 				HttpURLConnection.HTTP_OK, code);
@@ -207,12 +219,15 @@ public class ClientBlackBoxTest {
 	}
 
 	/**
-	 * This method tests a GET request with additional query parameters, such
-	 * like query and wrap.
-	 *
-   * @throws IOException I/O exception
-   * @throws ParserConfigurationException parser exception
-   * @throws SAXException SAX exception
+	 * This method tests a GET request with additional query parameters, such like
+	 * query and wrap.
+	 * 
+	 * @throws IOException
+	 *           I/O exception
+	 * @throws ParserConfigurationException
+	 *           parser exception
+	 * @throws SAXException
+	 *           SAX exception
 	 */
 	@Test
 	public void testGetResParams() throws IOException, SAXException,
@@ -229,8 +244,7 @@ public class ClientBlackBoxTest {
 		String wrap = "wrap=no";
 
 		// url for a GET query
-		URL queryUrl = new URL(REQURL.toString() + "?query=" + query + "&"
-				+ wrap);
+		URL queryUrl = new URL(REQURL.toString() + "?query=" + query + "&" + wrap);
 
 		// perform query
 		connection = (HttpURLConnection) queryUrl.openConnection();
@@ -244,8 +258,7 @@ public class ClientBlackBoxTest {
 			results = doc.getElementsByTagName(COUNTRY);
 			assertEquals("Test if only 1 country has been received: ", 1,
 					results.getLength());
-			attribute = (Attr) results.item(0).getAttributes().getNamedItem(
-					"name");
+			attribute = (Attr) results.item(0).getAttributes().getNamedItem("name");
 			assertEquals("Test if expected country is Austria: ", "Austria",
 					attribute.getTextContent());
 			resultNode = doc.getElementsByTagName(RESULTNODE).item(0);
@@ -268,10 +281,9 @@ public class ClientBlackBoxTest {
 			results = doc.getElementsByTagName(COUNTRY);
 			assertEquals("Test if only 1 country has been received again: ", 1,
 					results.getLength());
-			attribute = (Attr) results.item(0).getAttributes().getNamedItem(
-					"name");
-			assertEquals("Test if expected country is Austria again: ",
-					"Austria", attribute.getTextContent());
+			attribute = (Attr) results.item(0).getAttributes().getNamedItem("name");
+			assertEquals("Test if expected country is Austria again: ", "Austria",
+					attribute.getTextContent());
 			resultNode = doc.getElementsByTagName(RESULTNODE).item(0);
 			assertNotNull("Test if result node exists: ", resultNode);
 		}
@@ -286,14 +298,15 @@ public class ClientBlackBoxTest {
 
 	/**
 	 * This method tests a put HTTP request to create a new resource.
-	 *
-	 * @throws IOException I/O exception
+	 * 
+	 * @throws IOException
+	 *           I/O exception
 	 */
 	@Test
 	public void testPut() throws IOException {
 		final String reqURL = "theNewResource";
-		final URL theURL = new URL("http://localhost:" + PORT + "/"
-				+ SYSTEMNAME + "/" + JAXRX + "/" + reqURL);
+		final URL theURL = new URL("http://localhost:" + PORT + "/" + SYSTEMNAME
+				+ "/" + JAXRX + "/" + reqURL);
 		connection = (HttpURLConnection) theURL.openConnection();
 		int code = connection.getResponseCode();
 		assertEquals("Test if the resource is exists before creation: ",
@@ -302,8 +315,8 @@ public class ClientBlackBoxTest {
 		connection = (HttpURLConnection) theURL.openConnection();
 		connection.setRequestMethod("PUT");
 		connection.setDoOutput(true);
-		final OutputStream output = new BufferedOutputStream(connection
-				.getOutputStream());
+		final OutputStream output = new BufferedOutputStream(
+				connection.getOutputStream());
 		final InputStream input = new BufferedInputStream(
 				ClientBlackBoxTest.class.getResourceAsStream("/factbook.xml"));
 		int read;
@@ -321,19 +334,23 @@ public class ClientBlackBoxTest {
 		code = connection.getResponseCode();
 		assertEquals("Test if the resource is now available ",
 				HttpURLConnection.HTTP_OK, code);
-		
+
 		final InputStream is = connection.getInputStream();
-		while(is.read() != -1);
-		
+		while (is.read() != -1)
+			;
+
 		connection.disconnect();
 	}
 
 	/**
 	 * This method tests the query support for the HTTP POST method.
-	 *
-   * @throws IOException I/O exception
-   * @throws ParserConfigurationException parser exception
-   * @throws SAXException SAX exception
+	 * 
+	 * @throws IOException
+	 *           I/O exception
+	 * @throws ParserConfigurationException
+	 *           parser exception
+	 * @throws SAXException
+	 *           SAX exception
 	 */
 	@Test
 	public void testPostQuery() throws IOException, SAXException,
@@ -345,8 +362,8 @@ public class ClientBlackBoxTest {
 		connection.setDoOutput(true);
 		connection.setRequestMethod("POST");
 		connection.setRequestProperty("Content-Type", "application/query+xml");
-		final BufferedOutputStream output = new BufferedOutputStream(connection
-				.getOutputStream());
+		final BufferedOutputStream output = new BufferedOutputStream(
+				connection.getOutputStream());
 		output.write(postRequest.getBytes("UTF-8"));
 		output.flush();
 		output.close();
@@ -365,8 +382,9 @@ public class ClientBlackBoxTest {
 
 	/**
 	 * This method tests a delete request.d
-	 *
-	 * @throws Exception any exception
+	 * 
+	 * @throws Exception
+	 *           any exception
 	 */
 	@Test
 	public void testDeleteRes() throws Exception {
@@ -389,21 +407,21 @@ public class ClientBlackBoxTest {
 
 	/**
 	 * This method creates of an input stream an XML document.
-	 *
+	 * 
 	 * @param input
-	 *            The input stream.
+	 *          The input stream.
 	 * @return The packed XML document.
 	 * @throws SAXException
-	 *             Exception occurred.
+	 *           Exception occurred.
 	 * @throws IOException
-	 *             Exception occurred.
+	 *           Exception occurred.
 	 * @throws ParserConfigurationException
-	 *             Exception occurred.
+	 *           Exception occurred.
 	 */
 	private Document xmlDocument(final InputStream input) throws SAXException,
 			IOException, ParserConfigurationException {
-		return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-				input);
+		return DocumentBuilderFactory.newInstance().newDocumentBuilder()
+				.parse(input);
 	}
 
 }
